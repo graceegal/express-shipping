@@ -17,8 +17,6 @@ const { shipProduct } = require("../shipItApi");
  */
 
 router.post("/", async function (req, res, next) {
-
-
   const result = jsonschema.validate(
     req.body, shipSchema, { required: true });
   if (!result.valid) {
@@ -29,8 +27,6 @@ router.post("/", async function (req, res, next) {
   const { productId, name, addr, zip } = req.body;
   const shipId = await shipProduct({ productId, name, addr, zip });
   return res.json({ shipped: shipId });
-
-
 });
 
 

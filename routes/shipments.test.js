@@ -22,4 +22,24 @@ describe("POST /", function () {
       .send();
     expect(resp.statusCode).toEqual(400);
   });
+
+  test("throws error JSON if invalid body input", async function () {
+    const resp = await request(app).post("/shipments").send({
+      productId: 100,
+      name: "gracee",
+      addr: "10 abc St.",
+      zip: "12345",
+      company: "my company"
+    });
+    expect(resp.statusCode).toEqual(400);
+    expect(resp.body).toEqual({
+      "error": {
+        "message": [
+          "instance.productId must be greater than or equal to 1000",
+          "instance is not allowed to have the additional property \"company\""
+        ],
+        "status": 400
+      }
+    });
+  });
 });
